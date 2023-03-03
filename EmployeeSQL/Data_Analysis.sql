@@ -44,7 +44,7 @@ IN (
 
 --Option A: gives required data, without displaying dept_name or dept_no
 -- This is possible based on information gleaned from earlier queries. Specifically the dept_no for "Sales"
-SELECT emp_no, last_name, first_name,
+SELECT emp_no, last_name, first_name
 FROM employees
 WHERE emp_no
 IN (
