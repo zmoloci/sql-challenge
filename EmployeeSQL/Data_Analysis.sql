@@ -41,13 +41,26 @@ IN (
 	WHERE first_name = 'Hercules' AND last_name LIKE 'B%');
 	
 --6. List each employee in the Sales department (d007), including their employee number, last name, and first name.
-SELECT emp_no, last_name, first_name
+
+--Option A: gives required data, without displaying dept_name or dept_no
+-- This is possible based on information gleaned from earlier queries. Specifically the dept_no for "Sales"
+SELECT emp_no, last_name, first_name,
 FROM employees
 WHERE emp_no
 IN (
 	SELECT emp_no
 	FROM dept_emp
 	WHERE dept_no = 'd007');
+
+--Option B: uses joins to help display the same data as above with the addition
+-- of the dept_no and dept_name being printed alongside each employee's  number, last name, and first name
+SELECT j.emp_no, e.last_name, e.first_name, d.dept_name, d.dept_no
+FROM departments d
+LEFT JOIN dept_emp j
+ON d.dept_no = j.dept_no
+LEFT JOIN employees e
+ON j.emp_no = e.emp_no
+WHERE d.dept_no = 'd007';
 
 
 --7. List each employee in the Sales and Development departments, including their employee number, last name, first name, and department name.
@@ -64,6 +77,7 @@ IN (
 	WHERE dept_no = 'd007' OR dept_no = 'd005');
 
 --8. List the frequency counts, in descending order, of all the employee last names (that is, how many employees share each last name).
+
 SELECT last_name, COUNT(last_name)  AS "employee last name count"
 FROM employees
 GROUP BY last_name
